@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    a <input type="number" id="letraA"/> <br> <br>
+    b <input type="number" id="letraB"/> <br> <br>
+    c <input type="number" id="letraC"/> <br> <br>
+    <button id="boton">Enviar</button>
+</form>
+<br>
+<table border="1px" id="tabla">
+    <tr><th>x</th><th>y</th></tr>
+</table>
+<script type="text/javascript">
+    var xhr = new XMLHttpRequest();
+    var boton =  document.getElementById("boton");
+    boton.addEventListener("click",function (e) {
+        e.preventDefault();
+        xhr.open("POST","app.php",true);
+
+        var a = document.getElementById("letraA").value;
+        var b = document.getElementById("letraB").value;
+        var c = document.getElementById("letraC").value;
+        xhr.onreadystatechange = function () {
+            if ((xhr.status=200) && (xhr.readyState==4)){
+                console.log(xhr.response);
+                document.getElementById("tabla").innerHTML+=xhr.responseText;
+            }
+        };
+        xhr.send(JSON.stringify({a,b,c}));
+
+    });
+</script>
+</body>
+</html>
